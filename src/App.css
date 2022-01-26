@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400&display=swap');
 
 * {
@@ -19,6 +18,7 @@ body {
   color: #f4f4f4;
 }
 
+/* Utilities */
 h1 {
   letter-spacing: 3px;
 }
@@ -27,16 +27,27 @@ img {
   width: 100%;
 }
 
+.alert {
+  text-align: center;
+  padding: 15px;
+  background: -webkit-linear-gradient(to right, #123, #fbfbfa);
+  background: linear-gradient(to right, #134, #111107);
+  width: 200px;
+  color: #fff;
+  margin: auto;
+  transform: all 0.3 ease;
+}
+
 .cards,
 .stats,
-.spinner {
+.spinner,
+.error {
   display: flex;
   justify-content: center;
   max-width: 920px;
   margin: auto;
   flex-wrap: wrap;
 }
-
 .pokemon-card {
   margin: 10px;
   width: 200px;

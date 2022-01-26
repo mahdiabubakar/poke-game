@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext, Fragment } from 'react';
 import PokeItem from './PokeItem';
 import PokeContext from '../context/pokemon/pokeContext';
 import Spinner from './Spinner';
+import AlertContext from '../context/alert/alertContext';
 
 const Pokes = () => {
   const [openedCard, setOpenedCard] = useState([]);
@@ -11,9 +12,11 @@ const Pokes = () => {
   const [clicks, setClicks] = useState(0);
 
   const pokeContext = useContext(PokeContext);
+  const alertContext = useContext(AlertContext);
 
-  const { pokemons, loading } = pokeContext;
+  const { pokemons, loading, error } = pokeContext;
 
+  const { alert, setAlert } = alertContext;
   //currently there are 4 pokemons but we need the pair
   const pairOfPokemons = [...pokemons, ...pokemons];
 
@@ -38,6 +41,7 @@ const Pokes = () => {
       setMatched([...matched, firstMatched.id]);
       setPairs([...pairs, secondMatched, firstMatched.id]);
       setWin(true);
+      setAlert('You have win');
     }
 
     if (openedCard.length === 2) setTimeout(() => setOpenedCard([]), 1000);
@@ -46,9 +50,16 @@ const Pokes = () => {
 
   if (loading) return <Spinner />;
 
+  if (error)
+    return (
+      <h1 className='error' style={{ height: '100vh', alignItems: 'center' }}>
+        Something went wrong
+      </h1>
+    );
   return (
     <Fragment>
       <h1 style={{ textAlign: 'center', padding: '15px' }}>Poke Game</h1>
+      {alert && <p className='alert'>{alert.msg}</p>}
       <div className='cards'>
         {pairOfPokemons.map((pokemon, index) => {
           //lets flip the card

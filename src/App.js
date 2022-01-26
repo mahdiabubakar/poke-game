@@ -1,13 +1,14 @@
 import './App.css';
 import Pokes from './components/Pokes';
 import PokeState from './context/pokemon/PokeState';
+import AlertState from './context/alert/AlertState';
 
 const App = () => {
   return (
     <PokeState>
-      <div>
+      <AlertState>
         <Pokes />
-      </div>
+      </AlertState>
     </PokeState>
   );
 };

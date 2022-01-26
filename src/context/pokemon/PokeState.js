@@ -3,45 +3,53 @@ import axios from 'axios';
 import PokeContext from './pokeContext';
 import PokeReducer from './pokeReducer';
 
-import { SET_LOADING, CLEAR_POKES, GET_POKES, GET_POKE } from '../types';
+import { SET_LOADING, GET_POKES, GET_POKE, POKE_ERROR } from '../types';
 
 const GithubState = props => {
-  const initailState = {
+  // Initial State
+  const initialState = {
     pokemons: [],
     poke: [],
     loading: false,
+    error: null,
   };
 
-  const [state, dispatch] = useReducer(PokeReducer, initailState);
+  const [state, dispatch] = useReducer(PokeReducer, initialState);
 
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
 
-  // Clear Users
-  const clearPokes = () => dispatch({ type: CLEAR_POKES });
-
   // getPokemons();
   const getPokemons = async () => {
     setLoading();
-    const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=5');
+    try {
+      const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=5');
+      getPoke(res.data.results);
 
-    getPoke(res.data.results);
-
-    dispatch({
-      type: GET_POKES,
-      payload: res.data,
-    });
+      dispatch({
+        type: GET_POKES,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({ type: POKE_ERROR, payload: err.response });
+    }
   };
 
   function getPoke(results) {
     setLoading();
-    results.map(async poke => {
-      const res = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${poke.name}`,
-      );
+    try {
+      // loop through result and send request to https://pokeapi.co/api/v2/pokemon/${name} to get single poke details
+      results.map(async poke => {
+        const res = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${poke.name}`,
+        );
 
-      dispatch({ type: GET_POKE, payload: res.data });
-    });
+        // dispatching the action GET_POKE
+        dispatch({ type: GET_POKE, payload: res.data });
+      });
+    } catch (err) {
+      dispatch({ type: POKE_ERROR, payload: err.response });
+    }
   }
 
   useEffect(() => {
@@ -50,15 +58,13 @@ const GithubState = props => {
     // eslint-disable-next-line
   }, []);
 
-  // console.log(state.pokes.results);
-
   return (
     <PokeContext.Provider
       value={{
         pokemons: state.pokemons,
         poke: state.poke,
         loading: state.loading,
-        clearPokes,
+        error: state.error,
       }}>
       {props.children}
     </PokeContext.Provider>
