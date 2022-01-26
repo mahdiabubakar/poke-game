@@ -1,38 +1,121 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+body {
   min-height: 100vh;
+  padding: 10px;
+  background: #333332;
+  background: -webkit-linear-gradient(to right, #123, #fbfbfa);
+  background: linear-gradient(to right, #134, #222218);
+  font-family: 'Lato';
+  line-height: 1.6;
+  font-size: 1rem;
+  color: #f4f4f4;
+}
+
+h1 {
+  letter-spacing: 3px;
+}
+
+img {
+  width: 100%;
+}
+
+.cards,
+.stats,
+.spinner {
+  display: flex;
+  justify-content: center;
+  max-width: 920px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.pokemon-card {
+  margin: 10px;
+  width: 200px;
+  height: 300px;
+  perspective: 1000px;
+}
+
+.pokemon-card.flipped .inner {
+  transform: rotateY(180deg);
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  transform-style: preserve-3d;
+  transition: 0.6s cubic-bezier(0.38, 0.02, 0.09, 1.66) all;
+}
+
+.inner {
+  border-radius: 5px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
+}
+
+.inner .front {
+  background: #123;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  cursor: pointer;
+  transition: all 0.5s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.card-outer {
+  margin: 10px;
+  width: 200px;
+  height: 300px;
+  perspective: 1000px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.inner .front,
+.inner .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  margin: 5px 0px;
+  border-radius: 5px;
+}
+
+.inner .front img {
+  display: block;
+  width: 80%;
+  max-width: 100%;
+}
+
+.pokemon-card .front {
+  transform: rotateY(180deg);
+}
+
+.pokemon-card .front:hover {
+  background: #14283b;
+}
+
+.pokemon-card .back {
+  background: #030302;
+  transition: 0.5s ease all;
+}
+
+.pokemon-card .back:hover {
+  background: #0e0e09;
+  transform: scale(1.01);
 }
