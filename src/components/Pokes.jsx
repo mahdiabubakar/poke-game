@@ -5,8 +5,8 @@ import Spinner from './Spinner';
 import AlertContext from '../context/alert/alertContext';
 
 const Pokes = () => {
-  const [openedCard, setOpenedCard] = useState([]);
-  const [matched, setMatched] = useState([]);
+  const [cardOpen, setCardOpen] = useState([]);
+  const [match, setMatch] = useState([]);
   const [win, setWin] = useState(false);
   const [pairs, setPairs] = useState([]);
   const [clicks, setClicks] = useState(0);
@@ -26,27 +26,27 @@ const Pokes = () => {
       setPairs([]);
       setClicks(0);
     }
-    setOpenedCard(opened => [...opened, index]);
+    setCardOpen(opened => [...opened, index]);
 
     setClicks(clicks + 1);
   }
 
   useEffect(() => {
-    if (openedCard < 2) return;
+    if (cardOpen < 2) return;
 
-    const firstMatched = pairOfPokemons[openedCard[0]];
-    const secondMatched = pairOfPokemons[openedCard[1]];
+    const firstMatch = pairOfPokemons[cardOpen[0]];
+    const secondMatch = pairOfPokemons[cardOpen[1]];
 
-    if (secondMatched && firstMatched.id === secondMatched.id) {
-      setMatched([...matched, firstMatched.id]);
-      setPairs([...pairs, secondMatched, firstMatched.id]);
+    if (secondMatch && firstMatch.id === secondMatch.id) {
+      setMatch([...match, firstMatch.id]);
+      setPairs([...pairs, secondMatch, firstMatch.id]);
       setWin(true);
       setAlert('You have win');
     }
 
-    if (openedCard.length === 2) setTimeout(() => setOpenedCard([]), 1000);
+    if (cardOpen.length === 2) setTimeout(() => setCardOpen([]), 1000);
     // eslint-disable-next-line
-  }, [openedCard]);
+  }, [cardOpen]);
 
   if (loading) return <Spinner />;
 
@@ -66,8 +66,8 @@ const Pokes = () => {
 
           let isFlipped = false;
 
-          if (openedCard.includes(index)) isFlipped = true;
-          if (matched.includes(pokemon.id)) isFlipped = true;
+          if (cardOpen.includes(index)) isFlipped = true;
+          if (match.includes(pokemon.id)) isFlipped = true;
           return (
             <div
               className={`pokemon-card ${isFlipped ? 'flipped' : ''} `}
