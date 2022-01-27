@@ -17,7 +17,7 @@ const Pokes = () => {
   const { pokemons, loading, error } = pokeContext;
 
   const { alert, setAlert } = alertContext;
-  //currently there are 4 pokemons but we need the pair
+  //we have 5 pokemons but we need the pair  to make them 10
   const pairOfPokemons = [...pokemons, ...pokemons];
 
   function flipCard(index) {

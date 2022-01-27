@@ -124,6 +124,7 @@ img {
 .pokemon-card .back {
   background: #030302;
   transition: 0.5s ease all;
+  cursor: pointer;
 }
 
 .pokemon-card .back:hover {
