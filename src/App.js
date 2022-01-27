@@ -1,6 +1,6 @@
 import './App.css';
 import Pokes from './components/Pokes';
-import PokeState from './context/pokemon/PokeState';
+import PokeState from './context/pokemon/PokeState.js';
 import AlertState from './context/alert/AlertState';
 
 const App = () => {
